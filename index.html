@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>币游链</title>
+    <meta name="keywords" content="币游链">
+    <meta name="description" content="币游链">
+    <link rel="shortcut icon" href="statics/images/favicon.ico">
+    <link href="statics/css/common.css" rel="stylesheet"/>
+    <script src="statics/libs/jquery.min.js"></script>
+    <script src="statics/libs/jquery.cookie.js"></script>
+    <script src="statics/plugins/layer/layer.js"></script>
+    <script src="statics/plugins/qrcode/qrcode.min.js"></script>
+
+    <script>
+        function numFormat(num) {
+            var c = (num.toString().indexOf('.') !== -1) ? num.toLocaleString() : num.toString().replace(/(\d)(?=(?:\d{3})+$)/g, '$1,');
+            return c;
+        }
+
+        $.ajaxSetup({
+            layerIndex: -1,
+            beforeSend: function (jqXHR, settings) {
+                this.layerIndex = layer.load(1);
+            },
+            complete: function () {
+                layer.close(this.layerIndex);
+            },
+            error: function (jqXHR, status, e) {
+                layer.alert('Data request failed, please try again!');
+            }
+        });
+    </script>
+</head>
+
+<body>
+<div id="root">
+    <link href="statics/css/header.css" rel="stylesheet">
+
+    <style>
+        .header-div .nav-active {
+            font-size: 18px;
+            color: #4A90E2;
+            font-weight: bold;
+        }
+    </style>
+    <div class="header-container">
+        <div class="header-c-m">
+            <div class="header-c-m-l"></div>
+            <div class="header-c-m-m">
+                <ul>
+                    <li><a href="index.html">首页</a></li>
+
+                    <li><a href="icex.html">关于币游</a></li>
+
+                    <li><a href="whats.html">产品优势</a></li>
+
+                    <li><a href="paper.html">币游生态</a></li>
+
+                    <li><a href="faq.html">联系我们</a></li>
+
+                    <li><a href="">开发者入口</a></li>
+                </ul>
+            </div>
+            <div class="header-c-m-r">
+                <div class="current_lang">
+                    <div class="lang">
+                        <span class="lang-txt">中文</span>
+                        <span class="fa fa-chevron-down chevron"></span>
+                    </div>
+                </div>
+                <div class="more_lang">
+                    <div class="lang selected" data-value='en_US' data-en="English" id="en_US">
+                        <span class="lang-txt">English</span>
+                    </div>
+                    <div class="lang" data-value='ko_KR' data-en="한국의" id="ko_KR">
+                        <span class="lang-txt">한국의</span>
+                    </div>
+                    <div class="lang" data-value='zh_HK' data-en="中文(繁体)" id="zh_HK">
+                        <span class="lang-txt">中文(繁体)</span>
+                    </div>
+                    <div class="lang" data-value='zh_CN' data-en="中文(简体)" id="zh_CN">
+                        <span class="lang-txt">中文(简体)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+        $(document).ready(function () {
+
+            $('.feature').on('click', function () {
+                layer.msg('Stay Tuned', {
+                    skin: 'demo-class',
+                    time: 2000,
+                });
+            });
+
+            var cookieLang = $.cookie("lang");
+            var img = $('#' + cookieLang).find('img').attr('src');
+            var lang = $('#' + cookieLang).attr('data-en');
+            $('.current_lang .lang-txt').text(lang);
+            $('.current_lang img').attr('src', img);
+            $('#' + cookieLang).addClass('selected').siblings().removeClass('selected');
+
+            $(document).click(function (e) {
+                $('.h-d-lan, .more_lang').removeClass('active');
+            });
+
+            $('.h-d-lan .current_lang').click(function (e) {
+                e.stopPropagation();
+                $(this).parent().toggleClass('active');
+
+                setTimeout(function () {
+                    $('.more_lang').toggleClass('active');
+                }, 5);
+            });
+
+            $('.more_lang .lang').click(function () {
+                $(this).addClass('selected').siblings().removeClass('selected');
+                $('.more_lang').removeClass('active');
+
+                var img = $(this).find('img').attr('src');
+                var lang = $(this).attr('data-value');
+
+
+                $('.current_lang .lang-txt').text(lang);
+                $('.current_lang img').attr('src', img);
+
+                $.cookie("lang", lang, {expires: 30, path: '/'});
+                window.location.reload();
+            });
+        });
+
+    </script>
+    <link href="statics/css/index/banner.css" rel="stylesheet">
+
+    <div class="main-banner">
+        <div class="main-p">
+            <p class="img-vdc"></p>
+            <p> Beyou Chain致力于打造全球领先的泛娱乐支付公有链，在区块链匿名支付与泛娱乐产业结合的领域开辟出新的道路，致力于打造出一个去中心化集支付、开发、娱乐为一体的游戏生态圈 </p>
+        </div>
+    </div>
+    <style>
+        .bottom-line {
+            width: 100%;
+            min-width: 1300px;
+            height: 298px;
+        }
+
+        .bottom-line img {
+            min-width: 1300px;
+            width: 100%;
+            height: 298px;
+            position: absolute;
+            z-index: -1;
+        }
+    </style>
+
+
+    <div class="bottom-line">
+        <img src="statics/images/img-split.png">
+    </div>
+    <link href="statics/css/index/introduction.css" rel="stylesheet">
+
+    <div class="intro">
+        <div class="intro-bg">
+            <img class="intro-bg-img" src="statics/images/img-blog.png">
+        </div>
+        <div class="intro-c">
+            <div class="intro-title">
+                <h1> 核心价值 </h1>
+            </div>
+            <div class="intro-body">
+                <div class="i-b-i">
+                    <p class="i-b-icon-3"></p>
+                    <p class="i-b-header">游戏资产道具上链</p>
+                    <p class="i-b-info">游戏开发商会基于币游链，设计它们的游戏道具，游戏的道具可以非常安全自由地流通在币游链平台上。</p>
+                </div>
+                <div class="i-b-i">
+                    <p class="i-b-icon-4"></p>
+                    <p class="i-b-header">去中心化游戏机制</p>
+                    <p class="i-b-info">引入可验证随机 数，为游戏中的博彩等细分领域提供公平性极强的应用场景。</p>
+                </div>
+                <div class="i-b-i">
+                    <p class="i-b-icon-5"></p>
+                    <p class="i-b-header">玩家即股东</p>
+                    <p class="i-b-info">每个玩家都可以成为这个生态的共建者。游戏开发商、玩家以及游戏内可流通的资源，将围绕币游链，形成 一个健康完整的游戏生态。</p>
+                </div>
+                <div class="i-b-i">
+                    <p class="i-b-icon-6"></p>
+                    <p class="i-b-header">打通链上链下支付场景</p>
+                    <p class="i-b-info">基于区块链分布式支付，通过安全记录和加密的方式，对互联网金融业务中大规模的活性数据进行验证，使得数据在分布式的数据库中实现跨网和安全共享。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <link href="statics/css/index/show.css" rel="stylesheet">
+
+    <div class="show">
+        <div class="show-title">
+            <h1> 案例 </h1>
+        </div>
+        <div class="show-body">
+            <div id="app" style="">
+                <div class="container">
+                    <div>
+                        <div class="pictureSlider-p">
+                            <ul id="zturn-app">
+                                <li class="poster-item-p zturn-item">
+                                    <img style="text-align: center" height="400" src="statics/images/img-pc-1.png">
+                                </li>
+                                <li class="poster-item-p zturn-item" style="text-align: center">
+                                    <img style="text-align: center" height="400" src="statics/images/img-pc-2.png">
+                                </li>
+                                <li class="poster-item-p zturn-item">
+                                    <img style="text-align: center" height="400" src="statics/images/img-pc-3.png">
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="show-item-download">
+                    <p>
+                        <i class="icon-download"></i><a style="cursor:pointer;">Download</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="bottom-line">
+            <img src="statics/images/img-split.png">
+        </div>
+
+        <script src="statics/libs/zturn.js"></script>
+        <script>
+
+            var items = ['app', 'pc', 'linux'];
+
+            $(".show-download li a").click(
+                function (e) {
+                    var item = $(this).data("item");
+
+                    // change bg
+                    if (item === 'pc') {
+                        $('.container').css("background", "url(statics/images/img-comp-bg.png) no-repeat center")
+                    } else if (item === 'app') {
+                        $('.container').css("background", "url(statics/images/img-phone-bg.png) no-repeat center")
+                    } else if (item === 'linux') {
+                        $('.container').css("background", "url(statics/images/img-comp-bg.png) no-repeat center")
+                    }
+
+                    $(this).removeClass("show-item-a-uclick").addClass("show-item-a-click").parent().siblings().find("a").removeClass("show-item-a-click").addClass("show-item-a-uclick");
+                    $(this).removeClass("show-item-a-uclick").addClass("show-item-a-click").parent().siblings().find("a").removeClass("show-item-a-click").addClass("show-item-a-uclick");
+
+                    $.each(items, function (i, itm) {
+                        if (itm == item) {
+                            $("#" + itm).css("display", "");
+                            $("#item-i-" + itm).removeClass("icon-" + itm + '-u').addClass("icon-" + itm + '-c');
+                        } else {
+                            $("#" + itm).css("display", "none");
+                            $("#item-i-" + itm).removeClass("icon-" + itm + '-c').addClass("icon-" + itm + '-u');
+                        }
+                    });
+                }
+            );
+
+            $.each(items, function (i, itm) {
+
+                if (itm === 'app') {
+                    new zturn({
+                        id: "zturn-" + itm,
+                        opacity: 0.5,
+                        width: 216,
+                        Awidth: 1024,
+                        scale: 0.8,
+                        auto: true,
+                        turning: 1113000
+                    })
+                } else if (itm === 'pc') {
+                    new zturn({
+                        id: "zturn-" + itm,
+                        opacity: 0.8,
+                        width: 460,
+                        Awidth: 1024,
+                        scale: 0.8,
+                        auto: true,
+                        turning: 1113000
+                    })
+                } else if (itm === 'linux') {
+                    new zturn({
+                        id: "zturn-" + itm,
+                        opacity: 0.8,
+                        width: 460,
+                        Awidth: 1024,
+                        scale: 0.8,
+                        auto: true,
+                        turning: 1113000
+                    })
+                }
+            });
+        </script>
+        <link href="statics/css/index/task.css" rel="stylesheet">
+
+        <link href="statics/css/index/roasdmap.css" rel="stylesheet">
+
+        <div class="map-container">
+            <div class="map-container-header">
+                <h1>发展历程</h1>
+            </div>
+            <div class="map-container-body">
+                <div class="map-container-body-l">
+                    <div class="item">
+                        <div id="timeline">
+                            <div>
+                                <section class="year">
+
+                                </section>
+                                <section class="year">
+                                    <h3>2017</h3>
+                                    <br>
+                                    <br>
+                                    <br>
+                                    <br>
+                                    <br>
+                                    <br>
+                                    <br>
+                                    <section>
+                                        <h4>09-2017</h4>
+                                        <ul>
+                                            <li>项目立项</li>
+                                        </ul>
+                                    </section>
+                                    <br>
+                                    <section>
+                                        <h4>09-2017</h4>
+                                        <ul>
+                                            <li>组建团队</li>
+                                        </ul>
+                                    </section>
+                                    <br>
+                                </section>
+                                <section class="year">
+                                    <h3>2018</h3>
+                                    <section>
+                                        <h4>01-2018</h4>
+                                        <ul>
+                                            <li>钱包及第一款以太坊游戏开发</li>
+                                        </ul>
+                                    </section>
+                                    <br>
+                                    <section>
+                                        <h4>02-2018</h4>
+                                        <ul>
+                                            <li>游戏进行第一次测试版上线以太坊，引爆社区</li>
+                                        </ul>
+                                    </section>
+                                    <br>
+                                    <br>
+                                    <br>
+                                    <section>
+                                        <h4>05-2018</h4>
+                                        <ul>
+                                            <li>第二款游戏进行上线EOS，24小时注册人数超10万</li>
+                                        </ul>
+                                    </section>
+                                    <br>
+                                    <br>
+                                    <br>
+                                    <section>
+                                        <h4>08-2018</h4>
+                                        <ul>
+                                            <li>项目基金会成立</li>
+                                        </ul>
+                                    </section>
+                                    <br>
+                                    <br>
+                                    <br>
+                                    <br>
+                                    <section>
+                                        <h4>12-2018</h4>
+                                        <ul>
+                                            <li>第三款游戏上线波场，一周内吸引20万海外粉丝注册</li>
+                                        </ul>
+                                    </section>
+                                    <br>
+                                </section>
+                                <section class="year">
+                                    <h3>2019</h3>
+                                    <section>
+                                        <h4>02-2019</h4>
+                                        <ul>
+                                            <li>游戏公链平台项目规划</li>
+                                        </ul>
+                                    </section>
+                                    <br>
+                                    <br>
+                                    <br>
+                                    <br>
+                                    <section>
+                                        <h4>06-2018</h4>
+                                        <ul>
+                                            <li>游戏公链测试网开启代码测试</li>
+                                        </ul>
+                                    </section>
+                                    <br>
+                                </section>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="map-container-body-r">
+                </div>
+            </div>
+        </div>
+
+        <script>
+
+            $('.home-map-1').on({
+                mouseover: function () {
+                    var that = this;
+                    layer.tips('Anonymous Cryptocurrency Superconducting Financial Network', that, {
+                        tips: 3,
+                        shift: 5,
+                        time: 0,
+                        skin: 'grey-white'
+                    });
+                },
+
+                mouseout: function () {
+                    layer.closeAll();
+                }
+            });
+
+            $('.home-map-2').on({
+                mouseover: function () {
+                    var that = this;
+                    layer.tips('Value-Sharing Private Peer-to-Peer Network', that, {
+                        tips: 3,
+                        shift: 5,
+                        time: 0,
+                        skin: 'grey-white'
+                    });
+                },
+
+                mouseout: function () {
+                    layer.closeAll();
+                }
+            });
+
+            $('.home-map-3').on({
+                mouseover: function () {
+                    var that = this;
+                    layer.tips('Consumer-Capital Embedded Smart-Business System', that, {
+                        tips: 3,
+                        shift: 5,
+                        time: 0,
+                        skin: 'grey-white'
+                    });
+                },
+
+                mouseout: function () {
+                    layer.closeAll();
+                }
+            });
+
+            $('.home-map-4').on({
+                mouseover: function () {
+                    var that = this;
+                    layer.tips('Virtual International Network of Freedom and Co-existence', that, {
+                        tips: 3,
+                        shift: 5,
+                        time: 0,
+                        skin: 'grey-white'
+                    });
+                },
+
+                mouseout: function () {
+                    layer.closeAll();
+                }
+            });
+
+            $('.home-map-5').on({
+                mouseover: function () {
+                    var that = this;
+                    layer.tips('Highly-Scalable Social Cooperation System', that, {
+                        tips: 3,
+                        shift: 5,
+                        time: 0,
+                        skin: 'grey-white'
+                    });
+                },
+
+                mouseout: function () {
+                    layer.closeAll();
+                }
+            });
+
+            $('.home-map-6').on({
+                mouseover: function () {
+                    var that = this;
+                    layer.tips('Full-Coverage Information Bidding System', that, {
+                        tips: 3,
+                        shift: 5,
+                        time: 0,
+                        skin: 'grey-white'
+                    });
+                },
+
+                mouseout: function () {
+                    layer.closeAll();
+                }
+            });
+        </script>
+        <link href="statics/css/index/paper.css" rel="stylesheet">
+
+        <link href="statics/css/footer.css" rel="stylesheet">
+
+        <div class="footer-bg">
+            <div class="footer-nav">
+                <div class="footer-nav-left">
+                    <img style="width:163px;" src="statics/images/img-banner-biyou.png">
+                </div>
+                <div class="footer-nav-right">
+                    <table style="border-collapse:separate; border-spacing:110px 20px;">
+                        <tr>
+                            <td noWrap="noWrap" class="footer-nav-td1">简介</td>
+                            <td noWrap="noWrap" class="footer-nav-td1">下载</td>
+                            <td noWrap="noWrap" class="footer-nav-td1">其他</td>
+                        </tr>
+                        <tr>
+                            <td noWrap="noWrap" class="footer-nav-td2"><a href="whats.html">关于币游</a></td>
+                            <td noWrap="noWrap" class="footer-nav-td2"><a>APP/PC</a></td>
+                            <td noWrap="noWrap" class="footer-nav-td2"><a href="faq.html">联系我们</a></td>
+                        </tr>
+                        <tr>
+                            <td noWrap="noWrap" class="footer-nav-td2"><a href="icex.html">币游生态</a></td>
+                            <td noWrap="noWrap" class="footer-nav-td2"><a
+                                    onclick="window.location.href='statics/Beyou.pdf'">白皮书/PPT</a></td>
+                            <td noWrap="noWrap" class="footer-nav-td2"></td>
+                        </tr>
+                        <tr>
+                            <td noWrap="noWrap" class="footer-nav-td2"></td>
+                            <td noWrap="noWrap" class="footer-nav-td2"></td>
+                            <td noWrap="noWrap" class="footer-nav-td2"></td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="footer-nav-qrcode">
+                    <div class="qrcode-container">
+                        <div style="background: #FFFFFF;width:160px; height:160px;padding: 10px;border-radius:8px;margin: 0 auto;">
+                            <div id="qrcode">
+                                <img style="width: 140px;height: 140px" src="statics/images/qrcode.jpg"/>
+                            </div>
+                        </div>
+                        <p style="margin-left: 10px">加入我们！创造美好未来！</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+        </script>
+
+    </div>
+</div>
+</body>
+</html>

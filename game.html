@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>币游链</title>
+    <meta name="keywords" content="V-Dimensi,blockchain">
+    <meta name="description" content="V-Dimensio">
+    <link rel="shortcut icon" href="statics/images/favicon.ico">
+    <link href="statics/css/common.css" rel="stylesheet" />
+    <script src="statics/libs/jquery.min.js"></script>
+    <script src="statics/libs/jquery.cookie.js"></script>
+    <script src="statics/plugins/layer/layer.js"></script>
+    <script src="statics/plugins/qrcode/qrcode.min.js"></script>
+
+    <script>
+        function numFormat(num) {
+            var c = (num.toString().indexOf('.') !== -1) ? num.toLocaleString() : num.toString().replace(/(\d)(?=(?:\d{3})+$)/g, '$1,');
+            return c;
+        }
+
+        $.ajaxSetup({
+            layerIndex: -1,
+            beforeSend: function (jqXHR, settings) {
+                this.layerIndex = layer.load(1);
+            },
+            complete: function () {
+                layer.close(this.layerIndex);
+            },
+            error: function (jqXHR, status, e) {
+                layer.alert('Data request failed, please try again!');
+            }
+        });
+    </script>
+</head>
+
+<body>
+    <div id="root">
+        <link href="statics/css/header.css" rel="stylesheet">
+
+        <style>
+            .header-c-m-m a.nav-active {
+                font-size: 18px;
+                color: #4A90E2;
+                font-weight: bold;
+            }
+        </style>
+
+        <div class="header-container">
+            <div class="header-c-m">
+                <div class="header-c-m-l"></div>
+                <div class="header-c-m-m">
+                    <ul>
+                        <li><a href="index.html">首页</a></li>
+
+                        <li><a href="icex.html">关于币游</a></li>
+
+                        <li><a href="whats.html">产品优势</a></li>
+
+                        <li><a href="paper.html">币游生态</a></li>
+
+                        <li><a href="faq.html">联系我们</a></li>
+
+                        <li><a href="">开发者入口</a></li>
+                    </ul>
+                </div>
+                <div class="header-c-m-r">
+                    <div class="current_lang">
+                        <div class="lang">
+                            <span class="lang-txt">中文</span>
+                            <span class="fa fa-chevron-down chevron"></span>
+                        </div>
+                    </div>
+                    <div class="more_lang">
+                        <div class="lang selected" data-value='en_US' data-en="English" id="en_US">
+                            <span class="lang-txt">English</span>
+                        </div>
+                        <div class="lang" data-value='ko_KR' data-en="한국의" id="ko_KR">
+                            <span class="lang-txt">한국의</span>
+                        </div>
+                        <div class="lang" data-value='zh_HK' data-en="中文(繁体)" id="zh_HK">
+                            <span class="lang-txt">中文(繁体)</span>
+                        </div>
+                        <div class="lang" data-value='zh_CN' data-en="中文(简体)" id="zh_CN">
+                            <span class="lang-txt">中文(简体)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+
+            $(document).ready(function () {
+
+                $('.feature').on('click', function () {
+                    layer.msg('Stay Tuned', {
+                        skin: 'demo-class',
+                        time: 2000,
+                    });
+                });
+
+                var cookieLang = $.cookie("lang");
+                var img = $('#' + cookieLang).find('img').attr('src');
+                var lang = $('#' + cookieLang).attr('data-en');
+                $('.current_lang .lang-txt').text(lang);
+                $('.current_lang img').attr('src', img);
+                $('#' + cookieLang).addClass('selected').siblings().removeClass('selected');
+
+                $(document).click(function (e) {
+                    $('.header-c-m-r, .more_lang').removeClass('active');
+                });
+
+                $('.header-c-m-r .current_lang').click(function (e) {
+                    e.stopPropagation();
+                    $(this).parent().toggleClass('active');
+
+                    setTimeout(function () {
+                        $('.more_lang').toggleClass('active');
+                    }, 5);
+                });
+
+                $('.more_lang .lang').click(function () {
+                    $(this).addClass('selected').siblings().removeClass('selected');
+                    $('.more_lang').removeClass('active');
+
+                    var img = $(this).find('img').attr('src');
+                    var lang = $(this).attr('data-value');
+
+
+                    $('.current_lang .lang-txt').text(lang);
+                    $('.current_lang img').attr('src', img);
+
+                    $.cookie("lang", lang, { expires: 30, path: '/' });
+                    window.location.reload();
+                });
+            });
+        </script>
+        <link href="statics/css/game/game.css" rel="stylesheet">
+        <link href="statics/css/icox/icox-common.css" rel="stylesheet">
+        <div class="icox-bg">
+            <div class="icox-container">
+                <div class="paper-b-l" style="text-align: center;padding-top: 120px">
+                    <h1 style="color: #fff;font-size: 36px">星际王者</h1>
+                </div>
+            </div>
+        </div>
+
+        <div class="game-body">
+            <div class="game-b-container">
+                <div class="game-b-container-div">
+                        <div style="width:830px;margin:0 auto;">
+                                <div
+                                    style="float:left;width:260px;height:1px;margin:25px auto;padding:0px;background-image:linear-gradient(to right,transparent,#435471);opacity: 0.3;">
+                                </div>
+                                <div
+                                    style="float:right;width:260px;height:1px;margin:25px auto;padding:0px;background-image:linear-gradient(to left,transparent,#435471);opacity: 0.3;">
+                                </div>
+                            </div>
+                    <h1 class="title">游戏简介</h1>
+                    <p class="desc">“星际王者”是币游链上的一款大型飞船对战游戏。游戏挖矿和邀请收益完全采用去中心化链上分配,，公正透明。</p>
+                    <p class="desc">
+                        飞船共有5个等级，升至最高级别后还有“无敌战机”，可供玩家无限升级。飞船数量越多，等级越高，越具有战斗力，玩家收益越高！ “星际王者”玩家可通过购买飞船、
+                        升级、对战来获得BYC令牌，连续多天可不间断获得收益。玩家花费宝石越多，可获得BYC令牌也越多。</p>
+                    <p class="desc">
+                        玩家通过不断购买飞船，每日收获更多的BYC，并可以在交易所售出，每日循环不停赚钱。单个用户投资最高收益比达80%，飞船可持续多天不间断收益。</p>
+                    <p class="desc">
+                        飞船共有5个等级，升至最高级别后还有“无敌战机”，可供玩家无限升级。飞船数量越多，等级越高，越具有战斗力，玩家收益越高！ “星际王者”玩家可通过购买飞船、
+                        升级、对战来获得BYC令牌，连续多天可不间断获得收益。玩家花费宝石越多，可获得BYC令牌也越多。</p>
+                </div>
+                <div class="game-b-container-div">
+                    <div style="width:830px;margin:0 auto;">
+                        <div
+                            style="float:left;width:260px;height:1px;margin:25px auto;padding:0px;background-image:linear-gradient(to right,transparent,#435471);opacity: 0.3;">
+                        </div>
+                        <div
+                            style="float:right;width:260px;height:1px;margin:25px auto;padding:0px;background-image:linear-gradient(to left,transparent,#435471);opacity: 0.3;">
+                        </div>
+                    </div>
+                    <h1 class="title">游戏截图</h1>
+                    <div class="game-b-container-div">
+                        <div style="margin-right: -20px;">
+                            <img style="text-align: center;display: inline-block;margin: 20px" height="400"
+                                src="statics/images/img-pc-1.png">
+                            <img style="text-align: center;display: inline-block;margin: 20px" height="400"
+                                src="statics/images/img-pc-2.png">
+                            <img style="text-align: center;display: inline-block;margin: 20px" height="400"
+                                src="statics/images/img-pc-3.png">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <link href="statics/css/footer.css" rel="stylesheet">
+
+        <div class="footer-bg">
+            <div class="footer-nav">
+                <div class="footer-nav-left">
+                    <img style="width:163px;" src="statics/images/img-banner-biyou.png">
+                </div>
+                <div class="footer-nav-right">
+                    <table style="border-collapse:separate; border-spacing:110px 20px;">
+                        <tr>
+                            <td noWrap="noWrap" class="footer-nav-td1">简介</td>
+                            <td noWrap="noWrap" class="footer-nav-td1">下载</td>
+                            <td noWrap="noWrap" class="footer-nav-td1">其他</td>
+                        </tr>
+                        <tr>
+                            <td noWrap="noWrap" class="footer-nav-td2"><a href="whats.html">关于币游</a></td>
+                            <td noWrap="noWrap" class="footer-nav-td2"><a>APP/PC</a></td>
+                            <td noWrap="noWrap" class="footer-nav-td2"><a href="faq.html">联系我们</a></td>
+                        </tr>
+                        <tr>
+                            <td noWrap="noWrap" class="footer-nav-td2"><a href="icex.html">币游生态</a></td>
+                            <td noWrap="noWrap" class="footer-nav-td2"><a
+                                    onclick="window.location.href='statics/Beyou.pdf'">白皮书/PPT</a></td>
+                            <td noWrap="noWrap" class="footer-nav-td2"></td>
+                        </tr>
+                        <tr>
+                            <td noWrap="noWrap" class="footer-nav-td2"></td>
+                            <td noWrap="noWrap" class="footer-nav-td2"></td>
+                            <td noWrap="noWrap" class="footer-nav-td2"></td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="footer-nav-qrcode">
+                    <div class="qrcode-container">
+                        <div
+                            style="background: #FFFFFF;width:160px; height:160px;padding: 10px;border-radius:8px;margin: 0 auto;">
+                            <div id="qrcode">
+                                <img style="width: 140px;height: 140px" src="statics/images/qrcode.jpg" />
+                            </div>
+                        </div>
+                        <p style="margin-left: 10px">加入我们！创造美好未来！</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+        </script>
+    </div>
+</body>
+
+</html>

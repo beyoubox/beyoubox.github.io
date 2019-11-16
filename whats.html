@@ -1,0 +1,405 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>币游链</title>
+    <meta name="keywords" content="币游链">
+    <meta name="description" content="币游链">
+    <link rel="shortcut icon" href="statics/images/favicon.ico">
+    <link href="statics/css/common.css" rel="stylesheet"/>
+    <script src="statics/libs/jquery.min.js"></script>
+    <script src="statics/libs/jquery.cookie.js"></script>
+    <script src="statics/plugins/layer/layer.js"></script>
+    <script src="statics/plugins/qrcode/qrcode.min.js"></script>
+
+    <script>
+        function numFormat(num) {
+            var c = (num.toString().indexOf ('.') !== -1) ? num.toLocaleString() : num.toString().replace(/(\d)(?=(?:\d{3})+$)/g, '$1,');
+            return c;
+        }
+
+        $.ajaxSetup({
+            layerIndex:-1,
+            beforeSend: function(jqXHR, settings) {
+                this.layerIndex = layer.load(1);
+            },
+            complete: function () {
+                layer.close(this.layerIndex);
+            },
+            error: function (jqXHR, status, e) {
+                layer.alert('Data request failed, please try again!');
+            }
+        });
+    </script>
+</head>
+
+<body>
+<div id="root">
+    <link href="statics/css/header.css" rel="stylesheet">
+
+    <style>
+        .header-c-m-m a.nav-active{
+            font-size: 18px;
+            color: #4A90E2;
+            font-weight: bold;
+        }
+    </style>
+
+    <div class="header-container">
+        <div class="header-c-m">
+            <div class="header-c-m-l"></div>
+            <div class="header-c-m-m">
+                <ul>
+                    <li><a href="index.html">首页</a></li>
+
+                    <li><a href="icex.html">关于币游</a></li>
+
+                    <li><a href="whats.html">产品优势</a></li>
+
+                    <li><a href="paper.html">币游生态</a></li>
+
+                    <li><a href="faq.html">联系我们</a></li>
+
+                    <li><a href="">开发者入口</a></li>
+                </ul>
+            </div>
+            <div class="header-c-m-r">
+                <div class="current_lang">
+                    <div class="lang">
+                        <span class="lang-txt">中文</span>
+                        <span class="fa fa-chevron-down chevron"></span>
+                    </div>
+                </div>
+                <div class="more_lang">
+                    <div class="lang selected" data-value='en_US' data-en="English" id="en_US">
+                        <span class="lang-txt">English</span>
+                    </div>
+                    <div class="lang" data-value='ko_KR' data-en="한국의" id="ko_KR">
+                        <span class="lang-txt">한국의</span>
+                    </div>
+                    <div class="lang" data-value='zh_HK' data-en="中文(繁体)" id="zh_HK">
+                        <span class="lang-txt">中文(繁体)</span>
+                    </div>
+                    <div class="lang" data-value='zh_CN' data-en="中文(简体)" id="zh_CN">
+                        <span class="lang-txt">中文(简体)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+        $(document).ready(function(){
+
+            $('.feature').on('click',function(){
+                layer.msg('Stay Tuned', {
+                    skin: 'demo-class',
+                    time: 2000,
+                });
+            });
+
+            var cookieLang = $.cookie("lang");
+            var img = $('#' + cookieLang).find('img').attr('src');
+            var lang = $('#' + cookieLang).attr('data-en');
+            $('.current_lang .lang-txt').text(lang);
+            $('.current_lang img').attr('src', img);
+            $('#' + cookieLang).addClass('selected').siblings().removeClass('selected');
+
+            $(document).click( function(e) {
+                $('.header-c-m-r, .more_lang').removeClass('active');
+            });
+
+            $('.header-c-m-r .current_lang').click(function(e){
+                e.stopPropagation();
+                $(this).parent().toggleClass('active');
+
+                setTimeout(function(){
+                    $('.more_lang').toggleClass('active');
+                }, 5);
+            });
+
+            $('.more_lang .lang').click(function(){
+                $(this).addClass('selected').siblings().removeClass('selected');
+                $('.more_lang').removeClass('active');
+
+                var img = $(this).find('img').attr('src');
+                var lang = $(this).attr('data-value');
+
+
+                $('.current_lang .lang-txt').text(lang);
+                $('.current_lang img').attr('src', img);
+
+                $.cookie("lang", lang, { expires: 30, path:'/'});
+                window.location.reload();
+            });
+        });
+    </script><link href="statics/css/whats/whats.css" rel="stylesheet">
+
+    <div class="whats">
+        <div class="whats-banner">
+        </div>
+        <div class="whats-body">
+            <div class="whats-body-container">
+                <div class="whats-body-c-l">
+                    <ul>
+                        <li>
+                            <div style="float: left;width:60px;height:31px;">
+                                <i id="whats-icon1" class="icon-w-nav1-c"></i>
+                            </div>
+                            <div style="float: left;width: 200px;height: 43px;">
+                                <a class="whats-a-click" data-item="1" href="javascript:void(0)">产品概述</a>
+                            </div>
+                        </li>
+                        <li>
+                            <div style="float: left;width:60px;height:31px;">
+                                <i id="whats-icon2" class="icon-w-nav2-u"></i>
+                            </div>
+                            <div style="float: left;width: 200px;height: 43px;">
+                                <a class="whats-a-unclick" data-item="2" href="javascript:void(0)">资产变现</a>
+                            </div>
+                        </li>
+                        <li>
+                            <div style="float: left;width:60px;height:31px;">
+                                <i id="whats-icon3" class="icon-w-nav3-u"></i>
+                            </div>
+                            <div style="float: left;width: 200px;height: 43px;">
+                                <a class="whats-a-unclick" data-item="3" href="javascript:void(0)">公平游戏</a>
+                            </div>
+                        </li>
+                        <li>
+                            <div style="float: left;width:60px;height:31px;">
+                                <i id="whats-icon4" class="icon-w-nav4-u"></i>
+                            </div>
+                            <div style="float: left;width: 200px;height: 43px;">
+                                <a class="whats-a-unclick" data-item="4" href="javascript:void(0)">开发成本</a>
+                            </div>
+                        </li>
+                        <li>
+                            <div style="float: left;width:60px;height:31px;">
+                                <i id="whats-icon5" class="icon-w-nav5-u"></i>
+                            </div>
+                            <div style="float: left;width: 200px;height: 43px;">
+                                <a class="whats-a-unclick" data-item="5" href="javascript:void(0)">游戏门槛</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="whats-body-c-r">
+                    <div class="whats-b-r-inner"></div>
+                    <div class="whats-b-r-middle"></div>
+                    <div class="whats-b-r-outer">
+                        <div class="whats-b-r-outer-p">
+                            <div class="body-left">
+                                <h1>产品概述</h1>
+                                <p class="p-indent">面对游戏市场种种乱象，Beyou Chain希望能改变产业疲软和不成熟的现状。自诞生以来，Beyou Chain便一直致力于打造全球顶尖的泛娱乐支付公链，在区块链匿名支付与游戏产业结合的领域开辟出新的道路，致⼒于打造出⼀个集支付、开发、娱乐为⼀体的泛娱乐⽣态圈：</p>
+                                <br/>
+                                <p class="p-indent">1）玩家在游币的平台上找到优质的区块链游戏，并可以自由、安全、快捷地交易游戏资产；</p>
+                                <p class="p-indent">2）游戏开发商可以导⼊更优质的用户，通过游戏即挖矿的模式增加用户黏性，同时还可以官⽅的形式将游戏的珍稀资产放⼊平台与玩家交易；</p>
+                                <p class="p-indent">3）投资型玩家可以通过挖矿、买卖游戏资产获得收益。对于拥有游戏梦想的独立开发者，我们还可以通过平台基金、黑客松比赛等⽅式进⾏扶持;</p>
+                                <p class="p-indent">4）通过平台统⼀通证 BYC，确保不同游戏资产之间低成本⾼效率转移，保障了客户资产变现能⼒;</p>
+                                <p class="p-indent">5）不同于 ETH、EOS、波场等其他公链项目， Beyou Chain无需每⼀个项目发⾏⼀个代币，导致价值分散。公链上所有项目的价值，都集中到 BYC 这⼀个币上面，让 BYC 不断升值。任何游戏都使用 BYC 支付流通实现价值传递。使用者也不需要因为参与多个游戏⽽管理每个游戏的代币;</p>
+                                <p class="p-indent">6)通过模块化设计，屏蔽掉开发细节，让任何人都可以按 照自己的想法在币游链平台发布游戏，而不需要懂开发，做到大众创新，游戏数量和规模将迎来大爆发。让发布区块链游戏跟在ETH上面发行代币一样简单;</p>
+                                <p class="p-indent">7)通过引入匿名币技术，确保了游戏隐私性，真正的匿名游戏;</p>
+                            </div>
+                            <div class="body-right">
+                                <img src="statics/images/img-logo-l.png">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+        $(document).ready(function() {
+            bindItemCheck();
+            bindClick();
+        });
+
+        function bindItemCheck() {
+            var items = ['1', '2', '3', '4', '5'];
+
+            $(".whats-body-c-l li a").click(
+                function(e) {
+                    var item = $(this).data("item");
+
+                    $(this).removeClass("whats-a-unclick").addClass("whats-a-click").parent().siblings().find("a").removeClass("whats-a-click").addClass("whats-a-unclick");
+
+                    $.each(items, function (i, itm) {
+                        if(itm == item) {
+                            $("#whats-icon" + itm).removeClass("icon-w-nav" + itm + '-u').addClass("icon-w-nav" + itm + '-c');
+                        }else {
+                            $("#whats-icon" + itm).removeClass("icon-w-nav" + itm + '-c').addClass("icon-w-nav" + itm + '-u');
+                        }
+                    });
+
+                    $('.whats-b-r-outer-p').empty();
+
+                    if(item == '1'){
+                        $('.whats-b-r-outer-p').append(
+                            "<div class=\"body-left\">\n" +
+                            "                            <h1>产品概述</h1>\n" +
+                            "                            <p class=\"p-indent\">面对游戏市场种种乱象，Beyou Chain希望能改变产业疲软和不成熟的现状。自诞生以来，Beyou Chain便一直致力于打造全球顶尖的游戏支付公链，在区块链匿名支付与游戏产业结合的领域开辟出新的道路，致力于打造出一个去中心化集支付、开发、娱乐为一体的游戏生态圈。</p>\n" +
+                            "                            <br>\n" +
+                            "                            <br>\n" +
+                            "                            <p class=\"p-indent\">1) 玩家在游币的平台上找到优质的区块链游戏，并可以自由、安全、快捷地交易游戏资产;</p>\n" +
+                            "                            <p class=\"p-indent\">2) 游戏开发商可以导入更优质的用户，通过游戏即挖矿的模式 增加用户黏性，同时还可以官方的形式将游戏的珍稀资产放入平台与玩家交易;</p>\n" +
+                            "                            <p class=\"p-indent\">3) 投资型玩家可以通过挖矿、买卖游戏资产获得收益。对于拥有游戏梦想的独立开发者，我们还可以通过平台基金、众筹等方式进行扶持;</p>\n" +
+                            "                            <p class=\"p-indent\">4) 通过平台统一通证BYC，确保不同游戏资产之间低成本高效率转移，保障了客户资产变现能力;</p>\n" +
+                            "                            <p class=\"p-indent\">5) 不同于ETH、EOS、波场等其他公链项目， Beyou\n" +
+                            "                                    Chain无需每一个项目发行一个代币，导致价值分散。公链上所有项目的价值，都集中到BYC这一个币上面，让BYC不断升 值。任何游戏都使用BYC支付流通实现价值传递。用户也不需要因为参与多个游戏而管理每个游戏的代币;</p>\n" +
+                            "                            <p class=\"p-indent\">6) 通过模块化设计，屏蔽掉开发细节，让任何人都可以按照自己的想法在币游链平台发布游戏，而不需要懂开发，做到大众创新，游戏数量和规模将迎来大爆发。让发布区块链游戏跟在ETH上面发行代币一样简单;</p>\n" +
+                            "                            <p class=\"p-indent\">7) 通过引入匿名币技术，确保了游戏隐私性，真正的匿名游戏;</p>\n" +
+                            "                        </div>\n" +
+                            "                        <div class=\"body-right\">\n" +
+                            "                            <img src=\"statics/images/img-logo-l.png\">\n" +
+                            "                        </div>");
+                    }else if(item == '2'){
+                        $('.whats-b-r-outer-p').append(
+                            "<div class=\"body-left\">\n" +
+                            "                            <h1>资产变现</h1>\n" +
+                            "                            <p class=\"p-indent\">市场上游戏平台多样而繁杂，玩家可能花了数百或数千美元解锁神秘盒，以及无数小时的上场时间来赚取稀有游戏商品。然而，当玩家终止玩那场比赛时，游戏中皮肤、道具、金币都难以流通和变现，流通的成本和风险也极高。</p>\n" +
+                            "                            <br>\n" +
+                            "                            <br>\n" +
+                            "                            <p class=\"p-indent\">币游链平台公链借助区块链去中心化、分布式节点验证的透明机制以及高效可流通资产经济模型，将平台所有游戏通证统一化，以BYC作为唯一通证在所有游戏中自由流通，做到低成本，低风险的游戏物品流通变现，让游戏具备可玩性的同时，增加玩家收入，也以此提高游戏粘性。</p>\n" +
+                            "                        </div>\n" +
+                            "                        <div class=\"body-right\">\n" +
+                            "                            <img src=\"statics/images/img-logo-l.png\">\n" +
+                            "                        </div>"
+                        );
+                    }else if(item == '3'){
+                        $('.whats-b-r-outer-p').append(
+                            "<div class=\"body-left\">\n" +
+                            "                            <h1>公平游戏</h1>\n" +
+                            "                            <p class=\"p-indent\">传统游戏所有数据都存储在中心化服务器上，无法保证游戏 公平性。而Beyou Chain平台所有游戏运行在区块链智能合约上，它们是分布式的，不可篡改的。</p>\n" +
+                            "                            <br>\n" +
+                            "                            <br>\n" +
+                            "                            <p class=\"p-indent\">分布式意味着，合约的输出被网络上的每个人验证;不篡改意味着一旦智能合约被创建，这永远都无法改变。为了证明公平性，智能合约的工作方式是采用的是基于一个不可控的基础数据，再结合一定的公式算法，推导出随机结果，得到的结果依然是随机的，从而达到真随机性。\n</p>\n" +
+                            "                        </div>\n" +
+                            "                        <div class=\"body-right\">\n" +
+                            "                            <img src=\"statics/images/img-logo-l.png\">\n" +
+                            "                        </div>"
+                        );
+                    }else if(item == '4'){
+                        $('.whats-b-r-outer-p').append(
+                            "<div class=\"body-left\">\n" +
+                            "                            <h1>开发成本</h1>\n" +
+                            "                            <p class=\"p-indent\">传统游戏由于工作零散，重复开发需求不断，工作分散，代币无法重复利用，导致普通游戏开发成本和周期普遍较长，难以应对市场瞬息万变的环境。</p>\n" +
+                            "                            <br>\n" +
+                            "                            <br>\n" +
+                            "                            <p class=\"p-indent\">Beyou Chain通过模块化设计，完成游戏底层架构开发之后，只要有好的Idea，任何人都可以在币游链平台开发和定制自己的游戏，无需了解开发过程，平台用户既是开发者也是玩家。这将极大的降低游戏开发难度，并最大限度发挥大众创新热情，创建一个丰富多彩的游戏世界。同时通过币游链平台不断增长的用户群，确保新游戏有最基础的用户，节省大量的推广成本。</p>\n" +
+                            "                        </div>\n" +
+                            "                        <div class=\"body-right\">\n" +
+                            "                            <img src=\"statics/images/img-logo-l.png\">\n" +
+                            "                        </div>"
+                        );
+                    }else if(item == '5'){
+                        $('.whats-b-r-outer-p').append(
+                            "<div class=\"body-left\">\n" +
+                            "                            <h1>游戏门槛</h1>\n" +
+                            "                            <p class=\"p-indent\">中心化游戏带给用户带来完美的用户体验，但无法保证公平性，去中心游戏可以保证公平性，但是游戏体验难以提升，同时参与游戏的门槛很高，难以普及。币游链将在中心化和去中心中寻找平衡，给用户带来极致的用户体验。</p>\n" +
+                            "                            <br>\n" +
+                            "                            <br>\n" +
+                            "                            <p class=\"p-indent\">Beyou Chain自带一套中心化用户系统，类似传统交易所账户，系统拥有统一的充值和提现BYC账户，用户通过手机号登录，并分配UID用户将自己UID作为MEMO值在中心化系统进行充值，在用户玩游戏的时候，系统自动带着UID作为MEMO向DApp游戏合约充值，合约将通过UID对用户区分，用户在合约内的资金需要提现时，合约将用户UID作为MEMO提现到之前充值地址，也就是中心化系统充值账户。通过以上逻辑，可以实现中心化账户系统调用游戏合约。\n</p>\n" +
+                            "                        </div>\n" +
+                            "                        <div class=\"body-right\">\n" +
+                            "                            <img src=\"statics/images/img-logo-l.png\">\n" +
+                            "                        </div>"
+                        );
+                    }
+
+
+
+
+                }
+            );
+        }
+
+        function bindClick() {
+            $(".download").click(
+                function() {
+
+                    var info = '<p style="text-align: left;font-size: 14px;line-height: 26px;color: #2E4162;">Before downloading the assets, please first check whether your computer needs some certain application(s) to disable any Internet browsing restrictions. After that use the Tor browser to visit our site and make the download. For specific operations you can refer to ”<a style="ont-size: 14px;color: #4A90E2;" href="javascript:void(0)">Navigating to the Official Deep Web Site</a>”tutorial video to see how to use the Tor Browser. You may also use a local download to complete download and installation.</p>';
+
+                    $('#downloadDialog').empty();
+                    $('#downloadDialog').append(info);
+
+                    showBg();
+
+                }
+            );
+        }
+
+        function showBg() {
+            $("#dialog").show();
+
+            $('.header-container').addClass('add-blur');
+            $('.whats').addClass('add-blur');
+            $('.footer-bg').addClass('add-blur');
+            $('body').addClass('add-overflow');
+        }
+
+        function closeBg() {
+            $("#dialog").hide();
+
+            $('.header-container').removeClass('add-blur');
+            $('.whats').removeClass('add-blur');
+            $('.footer-bg').removeClass('add-blur');
+            $('body').removeClass('add-overflow');
+        }
+    </script>
+    <link href="statics/css/footer.css" rel="stylesheet">
+
+    <div class="footer-bg">
+        <div class="footer-nav">
+            <div class="footer-nav-left">
+                <img style="width:163px;" src="statics/images/img-banner-biyou.png">
+            </div>
+            <div class="footer-nav-right">
+                <table style="border-collapse:separate; border-spacing:110px 20px;">
+                    <tr>
+                        <td noWrap="noWrap" class="footer-nav-td1">简介</td>
+                        <td noWrap="noWrap" class="footer-nav-td1">下载</td>
+                        <td noWrap="noWrap" class="footer-nav-td1">其他</td>
+                    </tr>
+                    <tr>
+                        <td noWrap="noWrap" class="footer-nav-td2"><a href="whats.html">关于币游</a></td>
+                        <td noWrap="noWrap" class="footer-nav-td2"><a>APP/PC</a></td>
+                        <td noWrap="noWrap" class="footer-nav-td2"><a href="faq.html">联系我们</a></td>
+                    </tr>
+                    <tr>
+                        <td noWrap="noWrap" class="footer-nav-td2"><a href="icex.html">币游生态</a></td>
+                        <td noWrap="noWrap" class="footer-nav-td2"><a
+                                onclick="window.location.href='statics/Beyou.pdf'">白皮书/PPT</a></td>
+                        <td noWrap="noWrap" class="footer-nav-td2"></td>
+                    </tr>
+                    <tr>
+                        <td noWrap="noWrap" class="footer-nav-td2"></td>
+                        <td noWrap="noWrap" class="footer-nav-td2"></td>
+                        <td noWrap="noWrap" class="footer-nav-td2"></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="footer-nav-qrcode">
+                <div class="qrcode-container">
+                    <div style="background: #FFFFFF;width:160px; height:160px;padding: 10px;border-radius:8px;margin: 0 auto;">
+                        <div id="qrcode">
+                            <img style="width: 140px;height: 140px" src="statics/images/qrcode.jpg"/>
+                        </div>
+                    </div>
+                    <p style="margin-left: 10px">加入我们！创造美好未来！</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    </script>
+</div>
+</body>
+</html>

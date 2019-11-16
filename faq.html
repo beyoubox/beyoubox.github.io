@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>币游链</title>
+    <meta name="keywords" content="V-Dimensi,blockchain">
+    <meta name="description" content="V-Dimensio">
+    <link rel="shortcut icon" href="statics/images/favicon.ico">
+    <link href="statics/css/common.css" rel="stylesheet" />
+    <script src="statics/libs/jquery.min.js"></script>
+    <script src="statics/libs/jquery.cookie.js"></script>
+    <script src="statics/plugins/layer/layer.js"></script>
+    <script src="statics/plugins/qrcode/qrcode.min.js"></script>
+
+    <script>
+        function numFormat(num) {
+            var c = (num.toString().indexOf('.') !== -1) ? num.toLocaleString() : num.toString().replace(/(\d)(?=(?:\d{3})+$)/g, '$1,');
+            return c;
+        }
+
+        $.ajaxSetup({
+            layerIndex: -1,
+            beforeSend: function (jqXHR, settings) {
+                this.layerIndex = layer.load(1);
+            },
+            complete: function () {
+                layer.close(this.layerIndex);
+            },
+            error: function (jqXHR, status, e) {
+                layer.alert('Data request failed, please try again!');
+            }
+        });
+    </script>
+</head>
+
+<body>
+    <div id="root">
+        <link href="statics/css/header.css" rel="stylesheet">
+
+        <style>
+            .header-c-m-m a.nav-active {
+                font-size: 18px;
+                color: #4A90E2;
+                font-weight: bold;
+            }
+        </style>
+
+        <div class="header-container">
+            <div class="header-c-m">
+                <div class="header-c-m-l"></div>
+                <div class="header-c-m-m">
+                    <ul>
+                        <li><a href="index.html">首页</a></li>
+
+                        <li><a href="icex.html">关于币游</a></li>
+
+                        <li><a href="whats.html">产品优势</a></li>
+
+                        <li><a href="paper.html">币游生态</a></li>
+
+                        <li><a href="faq.html">联系我们</a></li>
+
+                        <li><a href="">开发者入口</a></li>
+                    </ul>
+                </div>
+                <div class="header-c-m-r">
+                    <div class="current_lang">
+                        <div class="lang">
+                            <span class="lang-txt">中文</span>
+                            <span class="fa fa-chevron-down chevron"></span>
+                        </div>
+                    </div>
+                    <div class="more_lang">
+                        <div class="lang selected" data-value='en_US' data-en="English" id="en_US">
+                            <span class="lang-txt">English</span>
+                        </div>
+                        <div class="lang" data-value='ko_KR' data-en="한국의" id="ko_KR">
+                            <span class="lang-txt">한국의</span>
+                        </div>
+                        <div class="lang" data-value='zh_HK' data-en="中文(繁体)" id="zh_HK">
+                            <span class="lang-txt">中文(繁体)</span>
+                        </div>
+                        <div class="lang" data-value='zh_CN' data-en="中文(简体)" id="zh_CN">
+                            <span class="lang-txt">中文(简体)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+
+            $(document).ready(function () {
+
+                $('.feature').on('click', function () {
+                    layer.msg('Stay Tuned', {
+                        skin: 'demo-class',
+                        time: 2000,
+                    });
+                });
+
+                var cookieLang = $.cookie("lang");
+                var img = $('#' + cookieLang).find('img').attr('src');
+                var lang = $('#' + cookieLang).attr('data-en');
+                $('.current_lang .lang-txt').text(lang);
+                $('.current_lang img').attr('src', img);
+                $('#' + cookieLang).addClass('selected').siblings().removeClass('selected');
+
+                $(document).click(function (e) {
+                    $('.header-c-m-r, .more_lang').removeClass('active');
+                });
+
+                $('.header-c-m-r .current_lang').click(function (e) {
+                    e.stopPropagation();
+                    $(this).parent().toggleClass('active');
+
+                    setTimeout(function () {
+                        $('.more_lang').toggleClass('active');
+                    }, 5);
+                });
+
+                $('.more_lang .lang').click(function () {
+                    $(this).addClass('selected').siblings().removeClass('selected');
+                    $('.more_lang').removeClass('active');
+
+                    var img = $(this).find('img').attr('src');
+                    var lang = $(this).attr('data-value');
+
+
+                    $('.current_lang .lang-txt').text(lang);
+                    $('.current_lang img').attr('src', img);
+
+                    $.cookie("lang", lang, { expires: 30, path: '/' });
+                    window.location.reload();
+                });
+            });
+        </script>
+        <link href="statics/css/faq/faq.css" rel="stylesheet">
+
+        <div class="faq">
+            <div class="faq-container">
+                <div class="faq-container-l">
+                    <ul>
+                        <li><a data-item="1" class="faq-nav-active">核心团队</a></li>
+                        <li><a data-item="2">顾问团队</a></li>
+                        <li><a data-item="3">合作及投资机构</a></li>
+                    </ul>
+                </div>
+                <div class="faq-container-r">
+                    <div class="faq-body-info">
+                        <p class="faq-title">Geoge Zenzefilis</p>
+                        <ul class="faq-body">
+                            <li>INTRALOT小组活跃成员</li>
+                            <li>INTRALOT团队产品服务首席执行官</li>
+                            <li>专注于为移动世界提供创新解决方案</li>
+                            <li>论文发表在《科学》上</li>
+                        </ul>
+                    </div>
+                    <div class="faq-body-info">
+                        <p class="faq-title">Dimitris Stergiopoulos</p>
+                        <ul class="faq-body">
+                            <li>在多家ICT公司担任战略和业务发展总监</li>
+                            <li>全栈工程师，前Uber技术团队成员</li>
+                            <li>首次完成可验证随机函数(VRF)的人</li>
+                            <li>具备12项专利</li>
+                        </ul>
+                    </div>
+                    <div class="faq-body-info">
+                        <p class="faq-title">Joe Barber</p>
+                        <ul class="faq-body">
+                            <li>谷歌前技术总监</li>
+                            <li>DPOS理论提出者</li>
+                            <li>波场前核心架构师</li>
+                            <li>管理INTRALOT集团交互移动产品</li>
+                        </ul>
+                    </div>
+                    <div class="faq-body-info">
+                        <p class="faq-title">Zac Karfaltis</p>
+                        <ul class="faq-body">
+                            <li>连续创业家</li>
+                            <li>微软高级工程师</li>
+                            <li>分片跨链通讯研发者</li>
+                            <li>虚拟机理论架构师</li>
+                        </ul>
+                    </div>
+                    <div class="faq-body-info">
+                        <p class="faq-title">Donald</p>
+                        <ul class="faq-body">
+                            <li>以太坊核心开发者</li>
+                            <li>黄皮书撰写者</li>
+                            <li>架构实现了erc720</li>
+                            <li>连续技术创业者</li>
+                        </ul>
+                    </div>
+                    <div class="faq-body-info">
+                        <p class="faq-title">Jessica</p>
+                        <ul class="faq-body">
+                            <li>早期加密技术传教士和导师</li>
+                            <li>AulIndustry商业化顾问</li>
+                            <li>在彩票博彩、ICT、运输物流等岗位拥有丰富经验</li>
+                        </ul>
+                    </div>
+                    <div class="faq-body-info">
+                        <p class="faq-title">Devin</p>
+                        <ul class="faq-body">
+                            <li>区块链技术的媒体人</li>
+                            <li>连续八年为《营销杂志》撰写关于移动营销策略和举措的文章</li>
+                            <li>通证经济学践行者</li>
+                        </ul>
+                    </div>
+                    <div class="faq-body-info">
+                        <p class="faq-title">Dick</p>
+                        <ul class="faq-body">
+                            <li>币权投融资专家</li>
+                            <li>BIT交易所前执行官</li>
+                            <li>拉瓦自贸港负责人</li>
+                            <li>资深代币架构师</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="p-l">
+                <p class="p-line"></p>
+            </div>
+        </div>
+
+        <script>
+
+            $('.faq-container-l ul li a').click(
+                function () {
+                    $(this).addClass("faq-nav-active").parent().siblings().find("a").removeClass("faq-nav-active");
+
+                    var item = $(this).data('item');
+
+                    var body = '';
+                    if (item == 1) {
+                        body = '<div class="faq-body-info">\n' +
+                            '                        <p class="faq-title">Geoge Zenzefilis</p>\n' +
+                            '                        <ul class="faq-body">\n' +
+                            '                            <li>INTRALOT小组活跃成员</li>\n' +
+                            '                            <li>INTRALOT团队产品服务首席执行官</li>\n' +
+                            '                            <li>专注于为移动世界提供创新解决方案</li>\n' +
+                            '                            <li>论文发表在《科学》上</li>\n' +
+                            '                        </ul>\n' +
+                            '                    </div>\n' +
+                            '                    <div class="faq-body-info">\n' +
+                            '                        <p class="faq-title">Dimitris Stergiopoulos</p>\n' +
+                            '                        <ul class="faq-body">\n' +
+                            '                            <li>在多家ICT公司担任战略和业务发展总监</li>\n' +
+                            '                            <li>全栈工程师，前Uber技术团队成员</li>\n' +
+                            '                            <li>首次完成可验证随机函数(VRF)的人</li>\n' +
+                            '                            <li>具备12项专利</li>\n' +
+                            '                        </ul>\n' +
+                            '                    </div>\n' +
+                            '                    <div class="faq-body-info">\n' +
+                            '                        <p class="faq-title">Joe Barber</p>\n' +
+                            '                        <ul class="faq-body">\n' +
+                            '                            <li>谷歌前技术总监</li>\n' +
+                            '                            <li>DPOS理论提出者</li>\n' +
+                            '                            <li>波场前核心架构师</li>\n' +
+                            '                            <li>管理INTRALOT集团交互移动产品</li>\n' +
+                            '                        </ul>\n' +
+                            '                    </div>\n' +
+                            '                    <div class="faq-body-info">\n' +
+                            '                        <p class="faq-title">Zac Karfaltis</p>\n' +
+                            '                        <ul class="faq-body">\n' +
+                            '                            <li>连续创业家</li>\n' +
+                            '                            <li>微软高级工程师</li>\n' +
+                            '                            <li>分片跨链通讯研发者</li>\n' +
+                            '                            <li>虚拟机理论架构师</li>\n' +
+                            '                        </ul>\n' +
+                            '                    </div>\n' +
+                            '                    <div class="faq-body-info">\n' +
+                            '                        <p class="faq-title">Donald</p>\n' +
+                            '                        <ul class="faq-body">\n' +
+                            '                            <li>以太坊核心开发者</li>\n' +
+                            '                            <li>黄皮书撰写者</li>\n' +
+                            '                            <li>架构实现了erc720</li>\n' +
+                            '                            <li>连续技术创业者</li>\n' +
+                            '                        </ul>\n' +
+                            '                    </div>\n' +
+                            '                    <div class="faq-body-info">\n' +
+                            '                        <p class="faq-title">Jessica</p>\n' +
+                            '                        <ul class="faq-body">\n' +
+                            '                            <li>早期加密技术传教士和导师</li>\n' +
+                            '                            <li>AulIndustry商业化顾问</li>\n' +
+                            '                            <li>在彩票博彩、ICT、运输物流等岗位拥有丰富经验</li>\n' +
+                            '                        </ul>\n' +
+                            '                    </div>\n' +
+                            '                    <div class="faq-body-info">\n' +
+                            '                        <p class="faq-title">Devin</p>\n' +
+                            '                        <ul class="faq-body">\n' +
+                            '                            <li>区块链技术的媒体人</li>\n' +
+                            '                            <li>连续八年为《营销杂志》撰写关于移动营销策略和举措的文章</li>\n' +
+                            '                            <li>通证经济学践行者</li>\n' +
+                            '                        </ul>\n' +
+                            '                    </div>\n' +
+                            '                    <div class="faq-body-info">\n' +
+                            '                        <p class="faq-title">Dick</p>\n' +
+                            '                        <ul class="faq-body">\n' +
+                            '                            <li>币权投融资专家</li>\n' +
+                            '                            <li>BIT交易所前执行官</li>\n' +
+                            '                            <li>拉瓦自贸港负责人</li>\n' +
+                            '                            <li>资深代币架构师</li>\n' +
+                            '                        </ul>\n' +
+                            '                    </div>';
+                    } else if (item == 2) {
+                        body = '<div class="faq-body-info">\n' +
+                            '                <p class="faq-title">Guy Glover</p>\n' +
+                            '                        <ul class="faq-body">\n' +
+                            '                            <li>Blockchain Pillar and Foundation创始人</li>\n' +
+                            '                            <li>莱特币核心开发者</li>\n' +
+                            '                        </ul>\n' +
+                            '            </div>\n' +
+                            '            <div class="faq-body-info">\n' +
+                            '                <p class="faq-title">Douglas</p>\n' +
+                            '                        <ul class="faq-body">\n' +
+                            '                            <li>美国最大支付公司 PayPal 高级管理人员</li>\n' +
+                            '                            <li>曾就职于众多世界知名高科技公司</li>\n' +
+                            '                            <li>在互联网技术、支付行业技术、大数据方面有深厚经验</li>\n' +
+                            '                        </ul>\n' +
+                            '            </div>\n' +
+                            '            <div class="faq-body-info">\n' +
+                            '                <p class="faq-title">Lee Gao</p>\n' +
+                            '                        <ul class="faq-body">\n' +
+                            '                            <li>在德国彩票领域创立经营公司</li>\n' +
+                            '                            <li>负责发展战略和计划、投资和融资</li>\n' +
+                            '                        </ul>\n' +
+                            '            </div>\n' +
+                            '            <div class="faq-body-info">\n' +
+                            '                <p class="faq-title">Allen Yan</p>\n' +
+                            '                        <ul class="faq-body">\n' +
+                            '                            <li>经验丰富的企业家</li>\n' +
+                            '                            <li>国际游戏会议发言人</li>\n' +
+                            '                            <li>澳门博彩资讯协会副会长</li>\n' +
+                            '                        </ul>\n' +
+                            '            </div>\n';
+                    }else if (item == 3) {
+                        body = '<div class="faq-body-info">\n' +
+                            '                <p class="faq-title">Watermill Ventures</p>\n' +
+                            '                   <div class="faq-body">Watermill Ventures是一家私募股权投资公司，总部位于莱克星顿。Watermill Ventures专门从事投资银行业务，成立于1993年。</div>\n' +
+                            '            </div>\n' +
+                            '            <div class="faq-body-info">\n' +
+                            '                <p class="faq-title">Marc Danneberg</p>\n' +
+                            '                   <div class="faq-body">Marc Danneberg，是欧洲和拉斯维加斯的一名在线投注游戏的连续投资者。</div>\n' +
+                            '            </div>\n' +
+                            '            <div class="faq-body-info">\n' +
+                            '                <p class="faq-title">LuneX Ventures</p>\n' +
+                            '                   <div class="faq-body">LuneX Ventures是与Golden Gate Ventures合作的专用区块链和CryptoCurrency基金；一个完善的东南亚风投公司</div>\n' +
+                            '                   <div class="faq-body">LuneX的创建基于对区块链技术的长期破坏性影响的坚定信念。分散式基于信任的网络的兴起，不仅会使现有行业发生面目全非的变化，而且还具有为数十亿服务欠缺的人们提供金融服务的能力，使他们能够掌控自己的生活并创造更美好的未来。 </div>\n' +
+                            '            </div>\n' +
+                            '            <div class="faq-body-info">\n' +
+                            '                <p class="faq-title">Pure Crypto</p>\n' +
+                            '                   <div class="faq-body">Pure Crypto是一家投资公司，致力于100％致力于区块链技术和加密货币的新兴数字资产类别。其中，Pure Crypto的目标是为一系列加密货币细分市场和机遇中最引人注目的策略，创建多样化的投资分配。</div>\n' +
+                            '            </div>\n' +
+                            '            <div class="faq-body-info">\n' +
+                            '                <p class="faq-title">GAIAWORLD</p>\n' +
+                            '                   <div class="faq-body">GAIAWORLD 致力于区块链游戏公链的底层技术研发，是一个非营利性基金组织，希望通过竞争性权益证明、平行链、神盾协议等核心技术的创新开发完成区块链基底拓展，提高区块链的计算能力，希望为游戏行业带来速度更快、成本更低、应用领域更广、交互更友好的区块链解决方案。</div>\n' +
+                            '            </div>\n' +
+                            '            <div class="faq-body-info">\n' +
+                            '                <p class="faq-title">波场TRON</p>\n' +
+                            '                   <div class="faq-body">波场TRON以推动互联网去中心化为己任，致力于为去中心化互联网搭建基础设施。 旗下的波场TRON协议是基于区块链的去中心化应用操作系统协议之一。 为协议上的去中心化应用运行提供高吞吐，高扩展，高可靠性的底层公链支持。有限的高计算性能节点被用户选为网络维护节点。</div>\n' +
+                            '                   <div class="faq-body">自2018年7月24日起，TRON收购了位于旧金山的互联网技术公司BitTorrent Inc.。 BitTorrent Inc.设计的分布式技术能够有效扩展，保持智慧化，并使创作者和消费者能够控制其内容和数据。 每个月有超过1.7亿人使用BitTorrent Inc.开发的产品。BitTorrent Inc.的协议每天可以传输全球40%的互联网流量。</div>\n' +
+                            '            </div>\n' +
+                            '            <div class="faq-body-info">\n' +
+                            '                <p class="faq-title">EOS</p>\n' +
+                            '                   <div class="faq-body">EOS，可以理解为Enterprise Operation System，即为商用分布式应用设计的一款区块链操作系统。EOS是引入的一种新的区块链架构，旨在实现分布式应用的性能扩展。注意，它并不是像比特币和以太坊那样的货币，而是基于EOS软件项目之上发布的代币，被称为区块链3.0。</div>\n' +
+                            '            </div>\n' +
+                            '            <div class="faq-body-info">\n' +
+                            '                <p class="faq-title">Cocos</p>\n' +
+                            '                   <div class="faq-body">Cocos的愿景是回归游戏设计的本质，每个游戏都是一个世界，在游戏世界中，存在世界观、剧情、规则、地图、道具、数值经济等彼此依存的设定。Cocos-BCX尝试将区块链的技术特性与游戏设计合二为一，分四个阶段完成整条游戏公链的搭建：同质Token上链、非同质Token上链、游戏关键规则上链、游戏整体上链。其中，同质化的Token可以表达积分、金币类的数值，作为游戏金币产出、流通与结算的载体。而游戏中的装备、道具、玩家账号等，所有价值均通过非同质化的Token进行表达。</div>\n' +
+                            '                   <div class="faq-body">Cocos-BCX定义游戏内所有广义交易行为（包括但不限于道具生成、购买、交易等场景）都将以同质和非同质的Token形式进行结算。当游戏内容具有统一标准的价值载体，所有和区块链系统对接的游戏内容便具备了跨平台的交易能力，玩家可通过同质和非同质Token实现游戏资产在不同游戏间的迁移。</div>\n' +
+                            '            </div>\n';
+                    }
+
+                    $('.faq-container-r').empty();
+                    $('.faq-container-r').append('<p style="font-size:20px;color:white;">' + body + '</p>');
+                }
+            );
+        </script>
+        <link href="statics/css/footer.css" rel="stylesheet">
+
+        <div class="footer-bg">
+            <div class="footer-nav">
+                <div class="footer-nav-left">
+                    <img style="width:163px;" src="statics/images/img-banner-biyou.png">
+                </div>
+                <div class="footer-nav-right">
+                    <table style="border-collapse:separate; border-spacing:110px 20px;">
+                        <tr>
+                            <td noWrap="noWrap" class="footer-nav-td1">简介</td>
+                            <td noWrap="noWrap" class="footer-nav-td1">下载</td>
+                            <td noWrap="noWrap" class="footer-nav-td1">其他</td>
+                        </tr>
+                        <tr>
+                            <td noWrap="noWrap" class="footer-nav-td2"><a href="whats.html">关于币游</a></td>
+                            <td noWrap="noWrap" class="footer-nav-td2"><a>APP/PC</a></td>
+                            <td noWrap="noWrap" class="footer-nav-td2"><a href="faq.html">联系我们</a></td>
+                        </tr>
+                        <tr>
+                            <td noWrap="noWrap" class="footer-nav-td2"><a href="icex.html">币游生态</a></td>
+                            <td noWrap="noWrap" class="footer-nav-td2"><a
+                                    onclick="window.location.href='statics/Beyou.pdf'">白皮书/PPT</a></td>
+                            <td noWrap="noWrap" class="footer-nav-td2"></td>
+                        </tr>
+                        <tr>
+                            <td noWrap="noWrap" class="footer-nav-td2"></td>
+                            <td noWrap="noWrap" class="footer-nav-td2"></td>
+                            <td noWrap="noWrap" class="footer-nav-td2"></td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="footer-nav-qrcode">
+                    <div class="qrcode-container">
+                        <div
+                            style="background: #FFFFFF;width:160px; height:160px;padding: 10px;border-radius:8px;margin: 0 auto;">
+                            <div id="qrcode">
+                                <img style="width: 140px;height: 140px" src="statics/images/qrcode.jpg" />
+                            </div>
+                        </div>
+                        <p style="margin-left: 10px">加入我们！创造美好未来！</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+        </script>
+    </div>
+</body>
+
+</html>
